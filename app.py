@@ -1,24 +1,25 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS   # ✅ Enables CORS for Wix frontend
 import re
 import json
 from datetime import datetime
 
 app = Flask(__name__)
+CORS(app)  # ✅ Allow requests from Wix and other domains
 
-# Load intents (editable JSON file - see intents.json below)
+# Load intents (editable JSON file)
 with open('intents.json', 'r', encoding='utf-8') as f:
     INTENTS = json.load(f)
 
 def match_intent(text):
     text_l = text.lower().strip()
-    # Try exact intent patterns (ordered)
+    # Try regex patterns first
     for intent in INTENTS['intents']:
         for pattern in intent.get('patterns', []):
             if re.search(pattern, text_l):
                 return intent
-    # fallback: keyword scoring
-    best = None
-    best_score = 0
+    # Fallback: keyword scoring
+    best, best_score = None, 0
     words = set(re.findall(r'\w+', text_l))
     for intent in INTENTS['intents']:
         kws = set(intent.get('keywords', []))
@@ -26,28 +27,31 @@ def match_intent(text):
         if score > best_score:
             best_score = score
             best = intent
-    if best_score >= 1:
-        return best
-    return None
+    return best if best_score >= 1 else None
+
+
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({"status": "ok", "message": "Strato Lending Chatbot API is live."})
+
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    data = request.json or {}
-    text = data.get('message', '')
-    session_id = data.get('session_id') or 'anon'
+    data = request.get_json(silent=True) or {}
+    text = data.get('message', '').strip()
+    if not text:
+        return jsonify({'reply': "Please enter a message."}), 400
+
     intent = match_intent(text)
     if intent:
-        # If the intent needs data (like rates) we can expand here
         response_text = intent.get('responses', ["Sorry, I don't have an answer right now."])[0]
-        # if this intent requests handoff, provide handoff options
         handoff = intent.get('handoff', False)
         payload = {
             'reply': response_text,
-            'intent': intent.get('name'),
+            'intent': intent.get('name') or intent.get('tag'),
             'handoff': handoff,
             'timestamp': datetime.utcnow().isoformat() + 'Z'
         }
-        # If handoff true, include contact data
         if handoff:
             payload['handoff_options'] = {
                 'phone': '+1 (646) 450-3088',
@@ -56,7 +60,6 @@ def chat():
             }
         return jsonify(payload)
     else:
-        # fallback answer + offer handoff
         return jsonify({
             'reply': "Sorry — I didn't quite get that. Would you like to talk to a live agent or submit a quick form?",
             'intent': 'fallback',
@@ -67,6 +70,7 @@ def chat():
                 'open_form': True
             }
         })
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
