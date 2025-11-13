@@ -1,54 +1,140 @@
 {
   "intents": [
     {
-      "name": "greeting",
-      "patterns": ["\\bhi\\b","\\bhello\\b","\\bhey\\b","\\bgood (morning|afternoon|evening)\\b"],
-      "keywords": ["hi","hello","hey","greetings"],
-      "responses": ["Welcome to StratoBridge Lending! How can I help you today? We can discuss loan programs, today's rates, or connect you to an agent."]
+      "tag": "greeting",
+      "patterns": ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"],
+      "responses": [
+        "Hello! Welcome to Strato Lending. How can I help you today?",
+        "Hi there! I’m Strato, your virtual lending assistant. What can I do for you?"
+      ]
     },
     {
-      "name": "loan_programs",
-      "patterns": ["\\bresidential\\b","\\bnon-?qm\\b","\\bcommercial\\b","\\brenovation\\b","loan program","loan programs","what loans"],
-      "keywords": ["residential","nonqm","non-qm","commercial","renovation","loan"],
-      "responses": ["We offer Residential, Non-QM, Commercial and Renovation mortgages. Which one would you like to learn about?"]
+      "tag": "qualify_mortgage",
+      "patterns": ["Do I qualify for a mortgage loan?", "Am I eligible for a mortgage?", "Can I get approved for a home loan?"],
+      "responses": [
+        "Eligibility for a mortgage depends on factors like your income, credit score, debt-to-income ratio, and employment history. We recommend getting pre-qualified or speaking with one of our loan specialists for a quick review."
+      ]
     },
     {
-      "name": "todays_rates",
-      "patterns": ["rate","rates","today's rates","today rates","current rate","mortgage rate"],
-      "keywords": ["rate","rates","today"],
-      "responses": ["You can view today's rates on our site: we update them frequently. Would you like me to open the Today's Rates page or email you the latest rates?"]
+      "tag": "prequalification_vs_preapproval",
+      "patterns": ["What is the difference between a pre-qualification and a pre-approval?", "Prequalification vs preapproval?", "How are prequalification and preapproval different?"],
+      "responses": [
+        "A pre-qualification is an initial estimate of how much you may be able to borrow based on self-reported information. A pre-approval involves verifying your financial documents and gives you a stronger position when making an offer on a home."
+      ]
     },
     {
-      "name": "apply",
-      "patterns": ["apply","application","how to apply","apply now"],
-      "keywords": ["apply","application","apply now"],
-      "responses": ["To apply, use our Apply Now form on the site. Would you like me to open the Apply page for you?"],
-      "handoff": false
+      "tag": "apr",
+      "patterns": ["What is APR?", "Explain APR", "What does APR mean?"],
+      "responses": [
+        "APR stands for Annual Percentage Rate. It reflects the total cost of borrowing — including interest and fees — expressed as a yearly rate. It helps you compare different loan offers more accurately."
+      ]
     },
     {
-      "name": "contact",
-      "patterns": ["contact","phone","call","email","support","talk to"],
-      "keywords": ["contact","phone","call","email","support"],
-      "responses": ["You can call +1 (646) 450-3088 or email info@stratolending.com. Do you want me to start a form so our team can contact you?"],
-      "handoff": true
+      "tag": "closing_process",
+      "patterns": ["What happens at the time of closing?", "What occurs during closing?", "How does closing work?"],
+      "responses": [
+        "At closing, you’ll sign all the final loan and title documents, pay any remaining closing costs, and officially take ownership of your new home. Once the paperwork is complete and funds are transferred, you’ll receive your keys!"
+      ]
     },
     {
-      "name": "mortgage_calculator",
-      "patterns": ["calculator","mortgage calculator","payment estimate","monthly payment"],
-      "keywords": ["calculator","payment","monthly"],
-      "responses": ["We have a mortgage calculator on the site — I can open it or ask a couple of quick questions to estimate payments if you'd like."]
+      "tag": "closing_costs_extra",
+      "patterns": ["Does closing incur any additional charge?", "Are there extra charges at closing?", "Do I need to pay anything else at closing?"],
+      "responses": [
+        "Yes, closing may include additional costs such as title fees, appraisal fees, prepaid taxes, and insurance. These are known as 'closing costs' and typically range from 2% to 5% of the loan amount."
+      ]
     },
     {
-      "name": "faq",
-      "patterns": ["faq","questions","how it works","process","what documents"],
-      "keywords": ["faq","questions","process","documents"],
-      "responses": ["Check our FAQ page for common questions. If you tell me your specific question I can try to help or escalate to an agent."]
+      "tag": "mortgage_definition",
+      "patterns": ["What is a mortgage?", "Explain mortgage", "What does mortgage mean?"],
+      "responses": [
+        "A mortgage is a type of loan used to buy a home or other real estate. You borrow money from a lender and agree to repay it over time, usually with interest."
+      ]
     },
     {
-      "name": "blog",
-      "patterns": ["blog","article","news","updates","mortgage news"],
-      "keywords": ["blog","article","news","updates"],
-      "responses": ["We post market updates and guides on our blog. Would you like the latest post or a topic recommendation?"]
+      "tag": "mortgage_types",
+      "patterns": ["What types of mortgage loans are available in the U.S.?", "Different types of mortgages", "Kinds of home loans"],
+      "responses": [
+        "Common mortgage types in the U.S. include Conventional Loans, FHA Loans, VA Loans, USDA Loans, and Jumbo Loans. Each has its own requirements and benefits depending on your financial situation."
+      ]
+    },
+    {
+      "tag": "pmi",
+      "patterns": ["What is PMI?", "What is Private Mortgage Insurance?", "Explain PMI"],
+      "responses": [
+        "PMI, or Private Mortgage Insurance, protects the lender if you stop making payments. It’s usually required when your down payment is less than 20% of the home’s value."
+      ]
+    },
+    {
+      "tag": "monthly_payment",
+      "patterns": ["What is included in my monthly mortgage payment?", "Monthly mortgage breakdown", "What makes up my mortgage payment?"],
+      "responses": [
+        "Your monthly mortgage payment typically includes principal, interest, property taxes, and homeowner’s insurance — often abbreviated as PITI. If you pay PMI, that’s included too."
+      ]
+    },
+    {
+      "tag": "credit_score",
+      "patterns": ["What credit score do I need to qualify?", "Minimum credit score for mortgage", "What score do I need for a home loan?"],
+      "responses": [
+        "Most lenders require a minimum credit score of around 620 for a conventional loan. FHA loans may allow lower scores, while higher scores help you qualify for better rates."
+      ]
+    },
+    {
+      "tag": "timeline",
+      "patterns": ["How long does it take to get a mortgage?", "Mortgage approval time", "How fast can I get a home loan?"],
+      "responses": [
+        "The mortgage process usually takes about 30 to 45 days from application to closing, depending on your documentation and the type of loan."
+      ]
+    },
+    {
+      "tag": "preapproval_before_house",
+      "patterns": ["Can I get pre-approved before house hunting?", "Should I get preapproved before buying a home?", "Preapproval before home search?"],
+      "responses": [
+        "Yes! Getting pre-approved before house hunting is a smart move. It helps you understand your budget and shows sellers that you’re a serious buyer."
+      ]
+    },
+    {
+      "tag": "fixed_vs_adjustable",
+      "patterns": ["What’s the difference between fixed and adjustable-rate mortgages?", "Fixed vs ARM", "Fixed-rate or adjustable mortgage?"],
+      "responses": [
+        "A fixed-rate mortgage has the same interest rate for the entire loan term. An adjustable-rate mortgage (ARM) starts with a lower rate that can change over time based on market conditions."
+      ]
+    },
+    {
+      "tag": "missed_payment",
+      "patterns": ["What happens if I can’t make a payment?", "Missed mortgage payment", "What if I can’t pay my mortgage?"],
+      "responses": [
+        "If you can’t make a payment, contact your lender immediately. You may qualify for options like forbearance, a repayment plan, or loan modification to avoid foreclosure."
+      ]
+    },
+    {
+      "tag": "refinance",
+      "patterns": ["Can I refinance my mortgage later?", "Refinance mortgage", "When can I refinance my loan?"],
+      "responses": [
+        "Yes, you can refinance your mortgage later to get a better rate, change your loan term, or access your home equity. Most borrowers consider refinancing after at least 6–12 months."
+      ]
+    },
+    {
+      "tag": "closing_costs",
+      "patterns": ["What are closing costs?", "Explain closing costs", "What fees are in closing costs?"],
+      "responses": [
+        "Closing costs are fees you pay when finalizing your mortgage. They include lender charges, title fees, escrow, taxes, and insurance. Typically, they’re about 2%–5% of the loan amount."
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["bye", "goodbye", "see you", "talk to you later"],
+      "responses": [
+        "Goodbye! Thank you for visiting Strato Lending — we’re always here if you have more questions.",
+        "Thanks for chatting! Have a great day!"
+      ]
+    },
+    {
+      "tag": "fallback",
+      "patterns": [],
+      "responses": [
+        "I’m not sure I understood that. Could you rephrase or ask about mortgages, loans, or pre-approvals?",
+        "Hmm, I don’t have that info yet — but I can connect you with a live agent if you’d like."
+      ]
     }
   ]
 }
