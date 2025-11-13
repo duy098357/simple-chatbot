@@ -1,0 +1,54 @@
+{
+  "intents": [
+    {
+      "name": "greeting",
+      "patterns": ["\\bhi\\b","\\bhello\\b","\\bhey\\b","\\bgood (morning|afternoon|evening)\\b"],
+      "keywords": ["hi","hello","hey","greetings"],
+      "responses": ["Welcome to StratoBridge Lending! How can I help you today? We can discuss loan programs, today's rates, or connect you to an agent."]
+    },
+    {
+      "name": "loan_programs",
+      "patterns": ["\\bresidential\\b","\\bnon-?qm\\b","\\bcommercial\\b","\\brenovation\\b","loan program","loan programs","what loans"],
+      "keywords": ["residential","nonqm","non-qm","commercial","renovation","loan"],
+      "responses": ["We offer Residential, Non-QM, Commercial and Renovation mortgages. Which one would you like to learn about?"]
+    },
+    {
+      "name": "todays_rates",
+      "patterns": ["rate","rates","today's rates","today rates","current rate","mortgage rate"],
+      "keywords": ["rate","rates","today"],
+      "responses": ["You can view today's rates on our site: we update them frequently. Would you like me to open the Today's Rates page or email you the latest rates?"]
+    },
+    {
+      "name": "apply",
+      "patterns": ["apply","application","how to apply","apply now"],
+      "keywords": ["apply","application","apply now"],
+      "responses": ["To apply, use our Apply Now form on the site. Would you like me to open the Apply page for you?"],
+      "handoff": false
+    },
+    {
+      "name": "contact",
+      "patterns": ["contact","phone","call","email","support","talk to"],
+      "keywords": ["contact","phone","call","email","support"],
+      "responses": ["You can call +1 (646) 450-3088 or email info@stratolending.com. Do you want me to start a form so our team can contact you?"],
+      "handoff": true
+    },
+    {
+      "name": "mortgage_calculator",
+      "patterns": ["calculator","mortgage calculator","payment estimate","monthly payment"],
+      "keywords": ["calculator","payment","monthly"],
+      "responses": ["We have a mortgage calculator on the site — I can open it or ask a couple of quick questions to estimate payments if you'd like."]
+    },
+    {
+      "name": "faq",
+      "patterns": ["faq","questions","how it works","process","what documents"],
+      "keywords": ["faq","questions","process","documents"],
+      "responses": ["Check our FAQ page for common questions. If you tell me your specific question I can try to help or escalate to an agent."]
+    },
+    {
+      "name": "blog",
+      "patterns": ["blog","article","news","updates","mortgage news"],
+      "keywords": ["blog","article","news","updates"],
+      "responses": ["We post market updates and guides on our blog. Would you like the latest post or a topic recommendation?"]
+    }
+  ]
+}

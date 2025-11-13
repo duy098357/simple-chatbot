@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+*.venv
+venv/
+ENV/
+env/
+
+# Flask logs and runtime files
+instance/
+*.log
+*.sqlite3
+*.db
+*.pid
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+.vscode/
+.idea/
+*.iml
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
+*.spec
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+Pipfile
+Pipfile.lock
+
+# Node (in case you add JS build)
+node_modules/
+
+# Render / Railway / AWS deploy cache
+*.tar.gz
+*.zip
+
+# Local config and credentials
+config.json
+secrets.json
+credentials.json

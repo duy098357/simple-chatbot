@@ -1,0 +1,74 @@
+<!-- Paste into Wix Custom Code (head or body) or use an HTML iframe element -->
+<div id="strato-chat" style="position:fixed;right:20px;bottom:20px;z-index:9999;font-family:Arial,sans-serif">
+  <div id="chat-btn" style="background:#0b6cff;color:#fff;padding:12px 16px;border-radius:28px;cursor:pointer;box-shadow:0 6px 16px rgba(11,108,255,.15)">
+    Chat with StratoBridge
+  </div>
+  <div id="chat-window" style="display:none;width:360px;height:420px;background:#fff;border-radius:8px;box-shadow:0 12px 30px rgba(0,0,0,.18);overflow:hidden">
+    <div style="padding:12px;background:#f5f7fb;border-bottom:1px solid #eee">
+      <strong>StratoBridge Lending</strong>
+      <button id="chat-close" style="float:right;border:none;background:transparent;cursor:pointer">✕</button>
+    </div>
+    <div id="chat-body" style="padding:12px;height:300px;overflow:auto;background:#fff"></div>
+    <div style="padding:8px;border-top:1px solid #eee;display:flex;gap:8px">
+      <input id="chat-input" style="flex:1;padding:8px;border:1px solid #ddd;border-radius:6px" placeholder="Ask about loans, rates, or apply now"/>
+      <button id="chat-send" style="padding:8px 12px;border-radius:6px;background:#0b6cff;color:#fff;border:none">Send</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const BACKEND_URL = "https://REPLACE_WITH_YOUR_BACKEND_DOMAIN/chat"; // <--- set this
+  const btn = document.getElementById('chat-btn');
+  const win = document.getElementById('chat-window');
+  const close = document.getElementById('chat-close');
+  const body = document.getElementById('chat-body');
+  const input = document.getElementById('chat-input');
+  const send = document.getElementById('chat-send');
+
+  function addMessage(text, who='bot'){
+    const el = document.createElement('div');
+    el.style.margin = '8px 0';
+    el.style.padding = '8px';
+    el.style.maxWidth = '80%';
+    if(who==='user'){
+      el.style.marginLeft = '20%';
+      el.style.background = '#e8f0ff';
+      el.style.borderRadius = '8px';
+    } else {
+      el.style.background = '#f3f5f8';
+      el.style.borderRadius = '8px';
+    }
+    el.textContent = text;
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  btn.addEventListener('click', ()=> win.style.display = 'block');
+  close.addEventListener('click', ()=> win.style.display = 'none');
+  send.addEventListener('click', sendMessage);
+  input.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') sendMessage(); });
+
+  async function sendMessage(){
+    const text = input.value.trim();
+    if(!text) return;
+    addMessage(text,'user');
+    input.value = '';
+    try{
+      const resp = await fetch(BACKEND_URL, {
+        method:'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({message:text, session_id: 'wix-' + (Date.now())})
+      });
+      const j = await resp.json();
+      addMessage(j.reply || "Sorry, something went wrong.");
+      if(j.handoff){
+        const ho = j.handoff_options || {};
+        addMessage("Want live help? Call " + ho.phone + " or email " + ho.email + " — or click here to open a contact form.");
+        // optionally open contact form link on click
+      }
+    } catch(err){
+      addMessage("Can't reach the chat service right now. Please call +1 (646) 450-3088 or email info@stratolending.com");
+    }
+  }
+})();
+</script>
